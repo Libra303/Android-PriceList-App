@@ -15,8 +15,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import jxl.Sheet;
+import jxl.Workbook;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,6 +76,40 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        
+        //===========================================================================
+        //엑셀 읽기
+        Log.d("row-test", "작동함");
+        try {
+            InputStream is = getBaseContext().getResources().getAssets().open("priceTable.xls");
+            Workbook wb = Workbook.getWorkbook(is);
+            Sheet sheet = wb.getSheet(0);
+
+//            for(int row = 0; row < sheet.getRows(); row++){
+//                StringBuilder sb = new StringBuilder();
+//                sb.append(row+1+"행 : " );
+//                for(int col = 0; col < sheet.getColumns(); col++){
+//                    sb.append(sheet.getCell(col,row).getContents()+"  ");
+//                }
+//                sb.append("\n");
+//                Log.d("test", sb.toString());
+//            }
+            
+//            //db에 넣기
+//            for(int row = 0; row < sheet.getRows(); row++){
+//                Product pd = new Product();
+//                pd.setName(sheet.getCell(0,row).getContents());
+//                pd.setSize(sheet.getCell(1,row).getContents());
+//                pd.setPrice(sheet.getCell(2,row).getContents());
+//                productDao.insertProdct(pd);
+//            }
+//
+//
+//            wb.close();
+//            is.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }
