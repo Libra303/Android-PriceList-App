@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_toolbar"
+        app:titleTextColor="@color/white"
+        android:background="@color/purple_200"
+        app:title="추가하기">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <TextView
+            android:gravity="right"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:text="품목명"/>
+
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <TextView
+            android:gravity="right"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:text="사이즈"/>
+
+        <EditText
+            android:id="@+id/size_et"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <TextView
+            android:gravity="right"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:text="가 격"/>
+
+        <EditText
+            android:id="@+id/price_et"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"/>
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:text="추가"/>
+
+</LinearLayout>
