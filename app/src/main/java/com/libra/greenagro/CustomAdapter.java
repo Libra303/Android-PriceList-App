@@ -48,6 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                Log.d("test", "onLongClick: "+ i);
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle(holder.pd_name.getText()+" / "+holder.pd_size.getText()+" / "+holder.pd_price.getText());
                 builder.setItems(R.array.dialog_items, new DialogInterface.OnClickListener() {
@@ -105,7 +106,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                     public void onClick(DialogInterface dialogInterface, int index) {
                                         MainActivity.productDao.deleteById(list.get(i).getId());
                                         list.remove(i);
-                                        notifyItemRemoved(i);
+                                        notifyDataSetChanged();
                                         Toast.makeText(view.getContext(), holder.pd_name.getText()+" 삭제완료", Toast.LENGTH_SHORT).show();
                                     }
                                 });

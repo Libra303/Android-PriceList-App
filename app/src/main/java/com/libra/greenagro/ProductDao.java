@@ -24,6 +24,9 @@ public interface ProductDao {
     @Query("SELECT * FROM product ORDER BY name, price")
     List<Product> gettAll();
 
+    @Query("DELETE FROM product")
+    void deleteAll();
+
     @Query("SELECT * FROM product WHERE name LIKE :search_name")
     List<Product> getByName(String search_name);
 
