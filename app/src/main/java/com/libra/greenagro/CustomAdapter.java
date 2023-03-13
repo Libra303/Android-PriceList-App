@@ -43,12 +43,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.pd_price.setText(list.get(position).getPrice());
 
         holder.itemView.setTag(position);
-
-        //클릭시 삭제 나중에 다이얼로그로 수정 및 삭제 뜨게 바꿀 것
+        
+        //요 부분 코드 정리 예정
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Log.d("test", "onLongClick: "+ i);
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle(holder.pd_name.getText()+" / "+holder.pd_size.getText()+" / "+holder.pd_price.getText());
                 builder.setItems(R.array.dialog_items, new DialogInterface.OnClickListener() {
@@ -76,22 +75,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                 upbuilder.setPositiveButton("수정하기", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int index) {
-                                        Product pd = new Product();
-                                        pd.setId(list.get(i).getId());
-                                        pd.setName(name_cd.getText().toString());
-                                        pd.setSize(size_cd.getText().toString());
-                                        pd.setPrice(price_cd.getText().toString());
+                                        Product pd = list.get(i);
+                                        pd.setName(name_cd.getText().toString().trim());
+                                        pd.setSize(size_cd.getText().toString().trim());
+                                        pd.setPrice(price_cd.getText().toString().trim());
 
                                         MainActivity.productDao.updateProduct(pd);
-                                        setList(MainActivity.productDao.gettAll());
+                                        notifyDataSetChanged();
                                         Toast.makeText(view.getContext(), holder.pd_name.getText()+" 수정완료", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 upbuilder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
+                                    public void onClick(DialogInterface dialogInterface, int i) {}
                                 });
                                 upbuilder.create().show();
                                 break;
@@ -124,9 +120,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
                 builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) {}
                 });
 
                 AlertDialog alertDialog = builder.create();
@@ -156,6 +150,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         }
     }
 
+    //리스트 세팅
     public void setList(List<Product> list) {
         this.list = list;
         notifyDataSetChanged();

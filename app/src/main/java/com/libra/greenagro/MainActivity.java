@@ -37,62 +37,69 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initUis();
+        initDB();
+        initRecyclerView();
+        //검색창 부분
+        searchView.setOnQueryTextListener(textListener);
+        
+        //excelToDB();
+        //productDao.deleteAll();
+    }
+
+
+
+    //초기 ui 세팅
+    private void initUis() {
         recyclerViewview = (RecyclerView) findViewById(R.id.recycler_view);
         searchView = findViewById(R.id.searchView);
         toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+    }
 
-
-        //DB=============================================================
+    //초기 DB 세팅
+    private void initDB() {
         ProductDB database = Room.databaseBuilder(getApplicationContext(), ProductDB.class,"Product_DB")
                 .fallbackToDestructiveMigration() //스키마 버전 변경 가능
                 .allowMainThreadQueries() //Main Thread에서 DB에 IO 가능하게 함
                 .build();
 
         productDao = database.productDao();
+    }
 
-        //리사이클러뷰===============================================================
+    //초기 rc 세팅
+    private void initRecyclerView() {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerViewview.setLayoutManager(llm);
         pd_list = productDao.gettAll();
 
         adapter = new CustomAdapter(pd_list);
         recyclerViewview.setAdapter(adapter);
-
-        //===========================================================================
-
-        //검색기능
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                List<Product> list = new ArrayList<>();
-                list = productDao.getByName("%"+s+"%");
-                adapter.setList(list);
-                return true;
-            }
-        });
-        
-        //===========================================================================
-        //엑셀 읽기
-        //dbSetting();
-        //초기화
-        //productDao.deleteAll();
     }
 
+    //검색창 구현 부
+    SearchView.OnQueryTextListener textListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
 
-
+        @Override
+        public boolean onQueryTextChange(String s) {
+            List<Product> list = new ArrayList<>();
+            list = productDao.getByName("%"+s+"%");
+            adapter.setList(list);
+            return true;
+        }
+    };
+    
+    //액션바에 점 세개 메뉴 세팅
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_layout, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -104,15 +111,17 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
+    //상품 추가 액티비티에 갔다가 다시 돌아왔을대 작동
     @Override
     protected void onResume() {
         super.onResume();
         pd_list = productDao.gettAll();
         adapter.setList(pd_list);
     }
-
-    private void dbSetting() {
+    
+    //엑셀 db로 넣기
+    private void excelToDB() {
         Log.d("row-test", "작동함");
         try {
             InputStream is = getBaseContext().getResources().getAssets().open("priceTable.xls");
@@ -137,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 pd.setPrice(sheet.getCell(2,row).getContents().trim());
                 productDao.insertProdct(pd);
             }
-
 
             wb.close();
             is.close();
