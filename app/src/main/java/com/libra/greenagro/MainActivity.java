@@ -9,11 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         
         //excelToDB();
         //productDao.deleteAll();
+
     }
 
 
@@ -119,7 +124,28 @@ public class MainActivity extends AppCompatActivity {
         pd_list = productDao.gettAll();
         adapter.setList(pd_list);
     }
-    
+
+    //검색창 밖에 부분 클릭시 키보드 들어가게
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if(focusView != null){
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if(!rect.contains(x,y)){
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if(imm!=null){
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(),0    );
+                }
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     //엑셀 db로 넣기
     private void excelToDB() {
         Log.d("row-test", "작동함");
