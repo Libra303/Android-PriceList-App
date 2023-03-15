@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GreenAgro</string>
+    <string name="app_name">가격표</string>
 
     <string-array name = "dialog_items">
         <item>"수정"</item>
