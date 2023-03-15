@@ -27,7 +27,7 @@ public interface ProductDao {
     @Query("DELETE FROM product")
     void deleteAll();
 
-    @Query("SELECT * FROM product WHERE name LIKE :search_name ORDER BY name, price")
+    @Query("SELECT * FROM product WHERE name LIKE :search_name OR size Like :search_name ORDER BY name, price")
     List<Product> getByName(String search_name);
 
     @Query("DELETE FROM product WHERE id == :id")
