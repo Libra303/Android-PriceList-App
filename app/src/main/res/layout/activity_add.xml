@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/add_toolbar"
         app:titleTextColor="@color/white"
-        android:background="@color/purple_200"
+        android:background="#5ce573"
         app:title="추가하기">
 
     </androidx.appcompat.widget.Toolbar>
@@ -82,6 +82,8 @@
         android:layout_marginTop="25dp"
         android:layout_width="140dp"
         android:layout_height="50dp"
-        android:text="추가"/>
+        android:backgroundTint="#00cc22"
+        android:textStyle="bold"
+        android:text="추 가"/>
 
 </LinearLayout>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/main_toolbar"
         app:titleTextColor="@color/white"
-        android:background="@color/purple_200"
+        android:background="#5ce573"
         app:menu="@menu/menu_layout">
 
         <androidx.appcompat.widget.SearchView
