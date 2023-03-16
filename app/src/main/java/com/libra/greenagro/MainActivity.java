@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -49,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         
         //excelToDB();
         //productDao.deleteAll();
+        //dbToExcel();
 
+        Log.d("test", "onCreate: ");
     }
 
 
@@ -125,9 +128,21 @@ public class MainActivity extends AppCompatActivity {
         adapter.setList(pd_list);
     }
 
+    //두번 눌러서 종료
+    private long backpressedTime = 0;
+    @Override
+    public void onBackPressed() {
+
+        if (System.currentTimeMillis() > backpressedTime + 2000) {
+            backpressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "한번 더 누르면 종료", Toast.LENGTH_SHORT).show();
+        } else if (System.currentTimeMillis() <= backpressedTime + 2000) {
+            finish();
+        }
+
+    }
+
     //검색창 밖에 부분 클릭시 키보드 들어가게
-
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();
@@ -179,4 +194,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+
 }

@@ -18,13 +18,13 @@ public interface ProductDao {
     @Update
     void updateProduct(Product pd);
 
-    @Query("SELECT * FROM product ORDER BY name, size")
+    @Query("SELECT * FROM product ORDER BY name, price")
     List<Product> gettAll();
 
     @Query("DELETE FROM product")
     void deleteAll();
 
-    @Query("SELECT * FROM product WHERE name LIKE :search_name OR size Like :search_name ORDER BY name, size")
+    @Query("SELECT * FROM product WHERE name LIKE :search_name OR size Like :search_name ORDER BY name, length(size), size")
     List<Product> getByName(String search_name);
 
     @Query("DELETE FROM product WHERE id == :id")
