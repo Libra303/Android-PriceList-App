@@ -18,16 +18,13 @@ public interface ProductDao {
     @Update
     void updateProduct(Product pd);
 
-    @Delete
-    void deleteProduct(Product pd);
-
-    @Query("SELECT * FROM product ORDER BY name, price")
+    @Query("SELECT * FROM product ORDER BY name, size")
     List<Product> gettAll();
 
     @Query("DELETE FROM product")
     void deleteAll();
 
-    @Query("SELECT * FROM product WHERE name LIKE :search_name OR size Like :search_name ORDER BY name, price")
+    @Query("SELECT * FROM product WHERE name LIKE :search_name OR size Like :search_name ORDER BY name, size")
     List<Product> getByName(String search_name);
 
     @Query("DELETE FROM product WHERE id == :id")
@@ -35,6 +32,5 @@ public interface ProductDao {
 
     @Query("UPDATE product SET name = :name, size = :size, price = :price WHERE id = :id")
     void updateById(int id, String name,String size, String price);
-
 
 }
