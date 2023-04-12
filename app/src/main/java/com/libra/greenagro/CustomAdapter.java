@@ -3,7 +3,10 @@ package com.libra.greenagro;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.text.Editable;
 import android.text.Layout;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
@@ -22,6 +26,7 @@ import java.util.zip.Inflater;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
     private List<Product> list;
+    private String result;
 
     public CustomAdapter(List<Product> list) {
         this.list = list;
@@ -65,6 +70,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                 EditText name_cd = (EditText) dialogView.findViewById(R.id.name_cd);
                                 EditText size_cd =(EditText) dialogView.findViewById(R.id.size_cd);
                                 EditText price_cd =(EditText) dialogView.findViewById(R.id.price_cd);
+                                //자동콤마
+                                price_cd.addTextChangedListener(getTextWatcher(price_cd));
 
                                 name_cd.setText(holder.pd_name.getText().toString());
                                 size_cd.setText(holder.pd_size.getText().toString());
@@ -154,5 +161,31 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void setList(List<Product> list) {
         this.list = list;
         notifyDataSetChanged();
+    }
+
+    //가격 세자리 자동 콤마
+    public TextWatcher getTextWatcher(EditText price_et){
+        DecimalFormat deformat = new DecimalFormat("###,###");
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(!TextUtils.isEmpty(charSequence.toString()) && !charSequence.toString().equals(result)){
+                    result = deformat.format(Double.parseDouble(charSequence.toString().replaceAll(",","")));
+                    price_et.setText(result);
+                    price_et.setSelection(result.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+        return watcher;
     }
 }

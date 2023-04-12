@@ -57,6 +57,7 @@
 
         <EditText
             android:id="@+id/price_cd"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
